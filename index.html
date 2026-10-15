@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DITLS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: #f3f4f6;
+        --surface: #ffffff;
+        --ink: #111827;
+        --muted: #6b7280;
+        --maroon: #7a0019;
+        --maroon-dark: #5a0013;
+        --line: #d1d5db;
+        --focus: #111827;
+        --sans: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+        --serif: "Newsreader", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        line-height: 1.5;
+      }
+
+      main {
+        flex: 1;
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: clamp(2rem, 8vw, 5rem) 1.5rem 2rem;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: var(--serif);
+        font-weight: 500;
+        font-size: clamp(3.5rem, 12vw, 7rem);
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        color: var(--maroon-dark);
+      }
+
+      .intro {
+        max-width: 38ch;
+        margin: 1.25rem 0 clamp(2rem, 6vw, 3.5rem);
+        font-size: 1.125rem;
+        color: var(--muted);
+      }
+
+      .actions {
+        display: grid;
+        gap: 1.25rem;
+        grid-template-columns: 1fr;
+        align-items: stretch;
+      }
+
+      @media (min-width: 720px) {
+        .actions {
+          grid-template-columns: 1.15fr 1fr;
+        }
+      }
+
+      .action {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2.5rem;
+        padding: 1.75rem;
+        min-height: 220px;
+        text-decoration: none;
+        color: inherit;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease;
+      }
+
+      .action:hover {
+        transform: translateY(-2px);
+      }
+
+      .action:focus-visible {
+        outline: 3px solid var(--focus);
+        outline-offset: 3px;
+      }
+
+      .action h2 {
+        margin: 0 0 0.35rem;
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .action p {
+        margin: 0;
+        max-width: 32ch;
+      }
+
+      .action .go {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      /* Inventory: solid, ledger-like block */
+      .inventory-direct {
+        background: var(--maroon);
+        color: #fff;
+        border-radius: 6px;
+        box-shadow:
+          0 1px 0 var(--maroon-dark),
+          0 10px 24px -14px rgba(122, 0, 25, 0.6);
+      }
+
+      .inventory-direct p {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .inventory-direct .go {
+        border-bottom: 2px solid #fff;
+        align-self: flex-start;
+      }
+
+      /* Acknowledgement receipt: paper slip with a torn, perforated edge */
+      .ar-direct {
+        position: relative;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-bottom: 0;
+        border-radius: 6px 6px 0 0;
+        padding-bottom: 2.25rem;
+      }
+
+      .ar-direct::after {
+        content: "";
+        position: absolute;
+        left: -1px;
+        right: -1px;
+        bottom: -10px;
+        height: 10px;
+        background:
+          linear-gradient(135deg, var(--surface) 50%, transparent 50%) 0 0 /
+            14px 10px,
+          linear-gradient(225deg, var(--surface) 50%, transparent 50%) 0 0 /
+            14px 10px;
+        background-repeat: repeat-x;
+        filter: drop-shadow(0 1px 0 var(--line));
+      }
+
+      .ar-direct p {
+        color: var(--muted);
+      }
+      .ar-direct .go {
+        color: var(--maroon);
+        border-bottom: 2px solid var(--maroon);
+        align-self: flex-start;
+      }
+
+      footer {
+        width: 100%;
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1.5rem;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.875rem;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .action {
+          transition: none;
+        }
+        .action:hover {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>DITLS</h1>
+      <p class="intro">
+        Track your inventory and issue acknowledgement receipts in one place.
+      </p>
+
+      <nav class="actions" aria-label="Main">
+        <a href="inventory.html" class="action inventory-direct">
+          <div>
+            <h2>Inventory</h2>
+            <p>View, add, and update items in stock.</p>
+          </div>
+          <span class="go">Open inventory</span>
+        </a>
+
+        <a href="acknowledegement_receipt.html" class="action ar-direct">
+          <div>
+            <h2>Acknowledgement receipt</h2>
+            <p>Create and review receipts (AR) for items received.</p>
+          </div>
+          <span class="go">Open receipts</span>
+        </a>
+      </nav>
+    </main>
+
+    <footer>DITLS</footer>
+  </body>
+</html>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>RobKit Borrowers</title>
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="assets/css/inv-css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="topbar py-3">
+      <div class="container-fluid px-4">
+        <div
+          class="d-flex justify-content-between align-items-center flex-wrap gap-2"
+        >
+          <div>
+            <h1>
+              <i class="bi bi-people me-2" style="color: var(--gold)"></i
+              >Borrowers
+            </h1>
+            <div class="tagline">who has what, why, and when it's due back</div>
+          </div>
+          <a class="btn btn-outline-copper" href="inventory.html">
+            <i class="bi bi-arrow-left me-1"></i>Back to inventory
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid px-4 py-4">
+      <!-- STATS -->
+      <div class="row g-3 mb-3">
+        <div class="col-6 col-md-3">
+          <div class="stat-card accent">
+            <div class="stat-icon"><i class="bi bi-arrow-left-right"></i></div>
+            <div class="num" id="statActive">0</div>
+            <div class="lbl">Active Loans</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="bi bi-boxes"></i></div>
+            <div class="num" id="statUnits">0</div>
+            <div class="lbl">Units Out</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card warn">
+            <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+            <div class="num" id="statSoon">0</div>
+            <div class="lbl">Due in 3 Days</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card bad">
+            <div class="stat-icon">
+              <i class="bi bi-exclamation-octagon"></i>
+            </div>
+            <div class="num" id="statOverdue">0</div>
+            <div class="lbl">Overdue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="toolbar p-3 mb-3">
+        <div class="row g-2 align-items-center">
+          <div class="col-12 col-md-6">
+            <div class="input-group">
+              <span
+                class="input-group-text"
+                style="
+                  background: var(--panel-2);
+                  border-color: var(--line);
+                  color: var(--ink-dim);
+                "
+              >
+                <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search borrower, item, purpose..."
+              />
+            </div>
+          </div>
+          <div class="col-6 col-md-4">
+            <select class="form-select" id="statusFilter">
+              <option value="">All loans</option>
+              <option value="overdue">Overdue</option>
+              <option value="soon">Due soon</option>
+              <option value="ok">On time</option>
+            </select>
+          </div>
+          <div class="col-6 col-md-2">
+            <button
+              class="btn btn-outline-copper w-100"
+              onclick="clearFilters()"
+            >
+              <i class="bi bi-x-circle me-1"></i>Clear
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOANS TABLE -->
+      <div class="bench-table">
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Ref</th>
+                <th>Borrower</th>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Borrowed</th>
+                <th>Return by</th>
+                <th>Purpose</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody id="loansBody"></tbody>
+          </table>
+        </div>
+
+        <div id="emptyState" class="empty-state d-none">
+          <i class="bi bi-emoji-smile d-block mb-2"></i>
+          <div class="mb-1" style="font-weight: 600" id="emptyTitle">
+            Nothing is borrowed right now
+          </div>
+          <div class="mono" style="font-size: 0.82rem">
+            Loans show up here when someone borrows a reusable item.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1080">
+      <div
+        id="toastMsg"
+        class="toast align-items-center text-bg-dark border-0"
+        role="alert"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="toastBody"></div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script type="text/javascript" src="assets/js/borrowers_script.js"></script>
+  </body>
+</html>
